@@ -1,8 +1,6 @@
-import { signOut } from 'supertokens-auth-react/recipe/emailpassword'
 import { create } from 'zustand'
-import { sessioninfo, updateUser } from './apiClient'
+import { sessioninfo, signin, signout, updateUser } from './apiClient'
 import createSelectors from './createSelectors'
-
 
 const useAuthBase = create((set) => ({
   authed: false,
@@ -13,14 +11,17 @@ const useAuthBase = create((set) => ({
     set({ authed: authed, userId: userId })
   },
   getSessionInfo: async() => {
-    const userInfo = await sessioninfo()    
+    await sessioninfo()    
   },
   setUserId: async(userId:string) => {
-    const udpdateUser = await updateUser()
+    await updateUser()
     set({ userId: userId })
   },
+  signIn: async(login:object) => {
+    await signin(login)
+  },
   signOut: async () => {
-    await signOut()
+    await signout()
     set({ authed: false, user: null, userId: null })
   },
 }))

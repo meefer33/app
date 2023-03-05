@@ -21,8 +21,17 @@ export default function FormLogin() {
   const defaultValues = formLogin.defaultValues
   const methods = useForm({ defaultValues })
 
-  const onSubmit = (d:object) => {
-    signIn(d)
+  const onSubmit = (form:{email:string,password:string}) => {
+    console.log(form.email,form.password)
+
+    const formFields = {
+      formFields: [
+        {id:'email',value:form.email},
+        {id:'password',value:form.password},
+      ]
+    }
+   signIn(formFields)
+  
   }
 
   return (

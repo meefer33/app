@@ -11,9 +11,10 @@ const useAppLoadBase = create((set) => ({
     set({ healthy: healthy })
   },
   loadApp: async () => {
-    const health = await healthCheck()
-    console.log('health',health)
-    health && set({ appLoaded: true })
+    //const health = await healthCheck()
+    //console.log('health',health)
+    //health && set({ appLoaded: true })
+    set({ appLoaded: true })
   },
 }))
 

@@ -1,4 +1,5 @@
 import useAuth from '@/api/useAuth'
+import Builder from '@/components/builder/Builder'
 import { useEffect, useState } from 'react'
 
 export default function Dashboard() {
@@ -16,9 +17,6 @@ export default function Dashboard() {
   }, [items])
 
   return (
-    <div>
-      <div>dashboard</div>
-
-    </div>
+    <Builder />
   )
 }

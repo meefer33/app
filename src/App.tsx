@@ -16,10 +16,9 @@ import useAppLoad from './api/useAppLoad'
 import Settings from './pages/account/settings/Settings'
 import SettingsBranding from './pages/account/settings/SettingsBranding'
 import SettingsRoles from './pages/account/settings/SettingsRoles'
-import { getSuperTokensRoutesForReactRouterDom, useUserContext } from 'supertokens-auth-react'
-import * as reactRouterDom from 'react-router-dom'
 import Session from 'supertokens-auth-react/recipe/session'
 import useAuth from './api/useAuth'
+import Login from './pages/Login'
 
 const App = () => {
   const { healthy, loadApp, appLoaded } = useAppLoad()
@@ -48,7 +47,7 @@ const App = () => {
           <Route path='/' element={<LayoutHome />}>
             <Route index element={<Home />} />
             <Route path='/home' element={<Home />} />
-            {getSuperTokensRoutesForReactRouterDom(reactRouterDom)}
+            <Route path='/login' element={<Login />} />
           </Route>
           <Route path='/account' element={<LayoutDashboard />}>
             <Route index element={<Dashboard />} />
@@ -63,7 +62,6 @@ const App = () => {
               <Route path='branding' element={<SettingsBranding />} />
               <Route path='roles' element={<SettingsRoles />} />
             </Route>
-            
           </Route>
           <Route path='/network-error' element={<PageNotFound />} />
           <Route path='*' element={<PageNotFound />} />
