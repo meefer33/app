@@ -4,34 +4,28 @@ import { FormProvider, useForm } from 'react-hook-form'
 import FormEmail from './controls/FormEmail'
 import FormPassword from './controls/FormPassword'
 
-
 export default function FormLogin() {
-  
-  const {signIn,session} = useAuth()
+  const { signIn, session } = useAuth()
   const formLogin = {
     defaultValues: {
       email: '',
       password: '',
     },
-    form: [
-      {type: 'Email', name: 'email', label: 'Email', required: true}
-    ]
+    form: [{ type: 'Email', name: 'email', label: 'Email', required: true }],
   }
 
   const defaultValues = formLogin.defaultValues
   const methods = useForm({ defaultValues })
 
-  const onSubmit = (form:{email:string,password:string}) => {
-    console.log(form.email,form.password)
+  const onSubmit = (form: { email: string; password: string }) => {
+    console.log(form.email, form.password)
 
-    const formFields = {
-      formFields: [
-        {id:'email',value:form.email},
-        {id:'password',value:form.password},
-      ]
+    const payload = {
+      email: form.email,
+      password: form.password,
+      isLogin: true
     }
-   signIn(formFields)
-  
+    signIn(payload)
   }
 
   return (

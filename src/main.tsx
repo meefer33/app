@@ -8,25 +8,14 @@ import EmailPassword from 'supertokens-auth-react/recipe/emailpassword'
 import Session from 'supertokens-auth-react/recipe/session'
 import { apiDomain } from './api/consts'
 
-SuperTokens.init({
-  appInfo: {
-    appName: 'shopapp',
-    apiDomain: apiDomain,
-    websiteDomain: 'http://localhost:5175',
-    apiBasePath: '/auth',
-    websiteBasePath: '/auth',
-  },
-  recipeList: [EmailPassword.init(), Session.init()],
-})
-
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <SuperTokensWrapper>
+  
     <BrowserRouter>
       <ToastProvider>
         <App />
       </ToastProvider>
     </BrowserRouter>
-  </SuperTokensWrapper>,
+,
 )
 /*
 import React from 'react'

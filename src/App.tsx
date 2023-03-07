@@ -25,16 +25,10 @@ const App = () => {
   const { toast } = useApiErrors()
   const { showToast } = useToast()
 
-  const sessionContext: any = Session.useSessionContext()
 
   useEffect(() => {
-    console.log(sessionContext.doesSessionExist, sessionContext.userId)
-    if (!sessionContext.loading) {
-      console.log(sessionContext)
-      useAuth.getState().setAuthed(sessionContext.doesSessionExist, sessionContext.userId)
-      !appLoaded && loadApp()
-    }
-  }, [sessionContext])
+    loadApp()
+  }, [])
 
   useEffect(() => {
     toast.detail && showToast(toast.severity, toast.summary, toast.detail)

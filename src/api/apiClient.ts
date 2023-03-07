@@ -1,9 +1,18 @@
 import { apiDomain } from './consts'
 import useApiErrors from './useApiErrors'
 import useAppLoad from './useAppLoad'
+import useAuth from './useAuth'
 
 const displayError = (error: string) => {
   useApiErrors.getState().setToast({ severity: 'warn', summary: 'Warning', detail: error })
+}
+
+const getHeaders = () => {
+  const headers = {'Content-type': 'application/json; charset=UTF-8'}
+  if(useAuth.getState('authed')) {
+      headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`
+  } 
+  return headers
 }
 
 const fetchApi = async (
@@ -12,15 +21,14 @@ const fetchApi = async (
     method: 'GET',
     body: '',
     config: { signal: AbortSignal.timeout(8000) },
+    mode: 'no-cors',
   },
 ) => {
   try {
     const response = await fetch(`${apiDomain}${payload.url}`, {
       method: payload.method,
       body: JSON.stringify(payload.body),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-      },
+      headers: getHeaders(),
       signal: AbortSignal.timeout(8000),
       ...payload.config,
     })
@@ -44,10 +52,8 @@ const fetchApi = async (
 
 //network test
 export const healthCheck = () =>
-  fetchApi({ url: '/ping', config: { signal: AbortSignal.timeout(8000) } })
+  fetchApi({ url: '/base', config: { signal: AbortSignal.timeout(8000) } })
 //auth endpoints
-export const signin = (params: any) =>
-  fetchApi({ url: '/auth/signin', method: 'POST', body: params })
-export const signout = () => fetchApi({ url: '/auth/signout?rid=session', method: 'POST' })
-export const sessioninfo = () => fetchApi({ url: '/sessioninfo' })
-export const updateUser = () => fetchApi({ url: '/updateUser' })
+export const signin = (params: any) => fetchApi({ url: '/login', method: 'POST', body: params })
+export const getUser = () => fetchApi({ url: '/user'})
+export const getResources = () => fetchApi({ url: '/resources'})

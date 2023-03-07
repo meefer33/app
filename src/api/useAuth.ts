@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { sessioninfo, signin, signout, updateUser } from './apiClient'
+import { signin } from './apiClient'
 import createSelectors from './createSelectors'
 
 const useAuthBase = create((set) => ({
@@ -7,21 +7,22 @@ const useAuthBase = create((set) => ({
   user: null,
   userId: null,
   userInfo: null,
-  setAuthed: (authed:boolean,userId:string) => {
-    set({ authed: authed, userId: userId })
+  setAuthed: (authed: boolean, userId: string, userInfo: object) => {
+    set({ authed: authed, userId: userId, userInfo: userInfo })
   },
-  getSessionInfo: async() => {
-    await sessioninfo()    
-  },
-  setUserId: async(userId:string) => {
-    await updateUser()
+  setUserId: async (userId: string) => {
     set({ userId: userId })
   },
-  signIn: async(login:object) => {
-    await signin(login)
+  signIn: async (login: object) => {
+    const authInfo = await signin(login)
+    console.log('pay', authInfo)
+    localStorage.setItem('token', authInfo.token)
+    localStorage.setItem('user', JSON.stringify(authInfo.payload))
+    set({ authed: true, userId: authInfo.payload.userId, userInfo: authInfo.payload })
   },
   signOut: async () => {
-    await signout()
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
     set({ authed: false, user: null, userId: null })
   },
 }))

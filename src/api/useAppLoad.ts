@@ -1,7 +1,6 @@
 import { create } from 'zustand'
 import { healthCheck } from './apiClient'
 import createSelectors from './createSelectors'
-import Session from 'supertokens-auth-react/recipe/session';
 import useAuth from './useAuth';
 
 const useAppLoadBase = create((set) => ({
@@ -11,10 +10,13 @@ const useAppLoadBase = create((set) => ({
     set({ healthy: healthy })
   },
   loadApp: async () => {
-    //const health = await healthCheck()
-    //console.log('health',health)
-    //health && set({ appLoaded: true })
-    set({ appLoaded: true })
+    const health = await healthCheck()
+    if(localStorage.getItem('token') && localStorage.getItem('user')){
+      const user = JSON.parse(localStorage.getItem('user'))
+      console.log(user)
+      useAuth.setState({ authed: true, userId: user.userId, userInfo: user })
+    }    
+    health && set({ appLoaded: true })
   },
 }))
 

@@ -5,19 +5,22 @@ import ToolbarButtons from '@/components/ToolbarButtons'
 import SideNavMulti from '@/ui/layouts/SideNavMulti'
 import SideNavMenu from '@/ui/layouts/SideNavMenu'
 import useAuth from '@/api/useAuth'
-import Session from 'supertokens-auth-react/recipe/session'
+import { getUser, getResources } from '@/api/apiClient'
 
 export default function LayoutDashboard() {
   const navigate = useNavigate()
   const {authed,signOut} = useAuth()
-  const sessionContext: any = Session.useSessionContext()
 
-  useEffect(() => { 
-    console.log('HELP')
-    if (!sessionContext.loading && sessionContext.doesSessionExist){
-      useAuth.getState().setUserId()
-    }
-  }, [sessionContext])
+  const call = async() => {
+    const getuser = await getUser()
+    console.log(getuser)
+    const getResourc = await getResources()
+    console.log(getResourc)
+  }
+
+  useEffect( () => {
+    call()
+  }, [])
 
   const menu = {
     items: [
