@@ -23,7 +23,6 @@ export default function FormLogin() {
     const payload = {
       email: form.email,
       password: form.password,
-      isLogin: true
     }
     signIn(payload)
   }

@@ -10,13 +10,15 @@ const useAppLoadBase = create((set) => ({
     set({ healthy: healthy })
   },
   loadApp: async () => {
-    const health = await healthCheck()
-    if(localStorage.getItem('token') && localStorage.getItem('user')){
+    //const health = await healthCheck()
+//console.log(health)
+    
+/*if(localStorage.getItem('token') && localStorage.getItem('user')){
       const user = JSON.parse(localStorage.getItem('user'))
       console.log(user)
       useAuth.setState({ authed: true, userId: user.userId, userInfo: user })
-    }    
-    health && set({ appLoaded: true })
+    } */   
+     set({ appLoaded: true })
   },
 }))
 

@@ -16,9 +16,11 @@ const useAuthBase = create((set) => ({
   signIn: async (login: object) => {
     const authInfo = await signin(login)
     console.log('pay', authInfo)
-    localStorage.setItem('token', authInfo.token)
-    localStorage.setItem('user', JSON.stringify(authInfo.payload))
-    set({ authed: true, userId: authInfo.payload.userId, userInfo: authInfo.payload })
+    if (authInfo) {
+      localStorage.setItem('token', authInfo.token)
+      localStorage.setItem('user', JSON.stringify(authInfo.payload))
+      set({ authed: true, userId: authInfo.payload.userId, userInfo: authInfo.payload })
+    }
   },
   signOut: async () => {
     localStorage.removeItem('token')
